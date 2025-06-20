@@ -15,6 +15,7 @@ import config from '@/config';
 import axios from 'axios';
 import { saveUserTokens } from '@/utils/SecureStoreHelper';
 import { saveUser } from '@/utils/AsyncStorageHelper';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function SignupScreen() {
     const [name, setName] = useState('');
@@ -23,6 +24,7 @@ export default function SignupScreen() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const router = useRouter();
     const navigation = useNavigation()
+    const { login } = useAuth()
 
     const handleSignUp = async () => {
         if (!name || !email || !password || !confirmPassword) {
@@ -43,8 +45,8 @@ export default function SignupScreen() {
             });
 
             const { user, device } = response.data
-            await saveUser(user)
-            await saveUserTokens(device)
+            login(user, device.accessToken)
+
 
             Alert.alert('Success', 'Signed up!');
             router.replace(APP_PATH.private.profile as Href);

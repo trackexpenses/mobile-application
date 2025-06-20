@@ -1,4 +1,5 @@
 import { Colors } from '@/constants/Colors';
+import { useAuth } from '@/hooks/useAuth';
 import { APP_PATH } from '@/paths';
 import { AuthTokens, getTokenFromSecureStore } from '@/utils/SecureStoreHelper';
 import { Ionicons } from '@expo/vector-icons';
@@ -10,11 +11,11 @@ import { useEffect, useState } from 'react';
 export default function PublicTabsLayout() {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const router = useRouter();
+  const { isLoggedIn } = useAuth()
 
   useEffect(() => {
     const checkAuth = async () => {
-      const token = await getTokenFromSecureStore(AuthTokens.ACCESS_TOKEN);
-      if (token) {
+      if (isLoggedIn) {
         router.replace(APP_PATH.private.profile as Href);
       } else {
         setIsCheckingAuth(false);

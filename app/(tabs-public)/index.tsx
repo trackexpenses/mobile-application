@@ -3,12 +3,16 @@ import { View, Text, Button, StyleSheet, TouchableOpacity, Image } from 'react-n
 import { Href, useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
 import { APP_PATH } from '@/paths';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function HomeScreen() {
   const router = useRouter();
 
   const handleLogin = () => router.push(APP_PATH.auth.login as Href);
   const handleSignUp = () => router.push(APP_PATH.auth.signup as Href);
+  const handleStartNow = () => router.push(APP_PATH.private.profile as Href);
+
+  const { isLoggedIn } = useAuth()
 
   return (
     <View style={styles.container}>
@@ -16,7 +20,7 @@ export default function HomeScreen() {
       <Text style={styles.title}>Welcome to ExpenseTracker!</Text>
       <Text style={styles.subtitle}>Track your spending and save smarter.</Text>
 
-      <View style={styles.buttonContainer}>
+      {!isLoggedIn ? <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={handleSignUp} style={styles.primaryButton}>
           <Text style={styles.primaryButtonText}>Sign Up</Text>
         </TouchableOpacity>
@@ -24,7 +28,11 @@ export default function HomeScreen() {
         <TouchableOpacity onPress={handleLogin} style={styles.secondaryButton}>
           <Text style={styles.secondaryButtonText}>Already have an account? Log In</Text>
         </TouchableOpacity>
-      </View>
+      </View> :
+        <TouchableOpacity onPress={handleStartNow} style={styles.primaryButton}>
+          <Text style={styles.primaryButtonText}>Start Now</Text>
+        </TouchableOpacity>
+      }
     </View>
   );
 }

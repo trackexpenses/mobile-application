@@ -1,5 +1,6 @@
 import config from '@/config';
 import { Colors } from '@/constants/Colors';
+import { useAuth } from '@/hooks/useAuth';
 import { API_PATH, APP_PATH } from '@/paths';
 import PasswordField from '@/sections/auth/PasswordField';
 import { saveUser } from '@/utils/AsyncStorageHelper';
@@ -21,6 +22,7 @@ export default function LoginScreen() {
     const [password, setPassword] = useState('');
     const router = useRouter();
     const navigation = useNavigation();
+    const { login } = useAuth()
 
     const handleLogin = async () => {
         if (!email || !password) {
@@ -35,8 +37,7 @@ export default function LoginScreen() {
             });
 
             const { user, device } = response.data
-            await saveUser(user)
-            await saveUserTokens(device)
+            login(user, device.accessToken)
 
             Alert.alert('Success', 'Logged in!');
             router.replace(APP_PATH.private.profile as Href);

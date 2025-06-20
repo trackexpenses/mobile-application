@@ -6,32 +6,19 @@ import { deleteUser, getUserData } from '@/utils/AsyncStorageHelper';
 import { APP_PATH } from '@/paths';
 import { deleteUserTokens } from '@/utils/SecureStoreHelper';
 import { router, Href } from 'expo-router';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function ProfileScreen() {
-  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
-
+  const { user, logout } = useAuth()
   const handleLogout = async () => {
     try {
-      await deleteUser()
-
-      await deleteUserTokens()
+      await logout()
       router.replace(APP_PATH.public.home as Href);
     } catch (error) {
       console.error('Error during logout:', error);
     }
   };
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const user = await getUserData()
-      if (user) {
-        setUser(user);
-      }
-    };
-    fetchUser();
-  }, []);
-
-  if (!user) return null;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -40,8 +27,8 @@ export default function ProfileScreen() {
           source={require('@/assets/images/user-icon.avif')}
           style={styles.avatar}
         />
-        <Text style={styles.name}>{user.name}</Text>
-        <Text style={styles.email}>{user.email}</Text>
+        <Text style={styles.name}>{user?.name}</Text>
+        <Text style={styles.email}>{user?.email}</Text>
         <View style={styles.logoutButton}>
           <Button title="Logout" onPress={handleLogout} color="#dc2626" />
         </View>
