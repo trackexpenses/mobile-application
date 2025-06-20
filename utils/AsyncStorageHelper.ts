@@ -9,3 +9,6 @@ export async function getUserData() {
     const user = userJson ? JSON.parse(userJson) : null;
     return user
 }
+export async function deleteUser() {
+    await AsyncStorage.clear();
+}

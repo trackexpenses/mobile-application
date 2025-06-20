@@ -15,6 +15,9 @@ export async function addTokenToSecureStore(key: AuthTokens, data: any) {
 
 }
 export async function getTokenFromSecureStore(key: AuthTokens) {
-    await SecureStore.getItemAsync(key);
-
+    return await SecureStore.getItemAsync(key);
+}
+export async function deleteUserTokens() {
+    await SecureStore.deleteItemAsync(AuthTokens.ACCESS_TOKEN);
+    await SecureStore.deleteItemAsync(AuthTokens.REFRESH_TOKEN);
 }
