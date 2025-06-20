@@ -24,13 +24,6 @@ export default function SignupScreen() {
     const router = useRouter();
     const navigation = useNavigation()
 
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            title: 'Signup',
-            headerBackTitle: 'Back',
-        });
-    }, [navigation]);
-
     const handleSignUp = async () => {
         if (!name || !email || !password || !confirmPassword) {
             Alert.alert('Error', 'Please fill out all fields.');
@@ -54,7 +47,7 @@ export default function SignupScreen() {
             await saveUserTokens(device)
 
             Alert.alert('Success', 'Signed up!');
-            router.replace(APP_PATH.explore as Href);
+            router.replace(APP_PATH.private.profile as Href);
         } catch (error: any) {
             const message =
                 error.response?.data?.message || 'Something went wrong. Please try again.';

@@ -22,14 +22,6 @@ export default function LoginScreen() {
     const router = useRouter();
     const navigation = useNavigation();
 
-
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            title: 'Login',
-            headerBackTitle: 'Back',
-        });
-    }, [navigation]);
-
     const handleLogin = async () => {
         if (!email || !password) {
             Alert.alert('Error', 'Please enter both email and password.');
@@ -45,9 +37,9 @@ export default function LoginScreen() {
             const { user, device } = response.data
             await saveUser(user)
             await saveUserTokens(device)
-            
+
             Alert.alert('Success', 'Logged in!');
-            router.replace(APP_PATH.explore as Href);
+            router.replace(APP_PATH.private.profile as Href);
         } catch (error: any) {
             console.error('Login error:', error);
             const message =
