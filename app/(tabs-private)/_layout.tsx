@@ -19,6 +19,15 @@ export default function PrivateTabsLayout() {
                     ),
                 }}
             />
+            <Tabs.Screen
+                name="myExpenses"
+                options={{
+                    title: 'My Expenses',
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="wallet-outline" size={size} color={color} />
+                    ),
+                }}
+            />
         </Tabs>
     );
 }
