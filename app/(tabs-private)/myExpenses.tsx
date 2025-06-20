@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     View,
     Text,
@@ -31,6 +31,32 @@ export default function AddExpenseScreen() {
     const [expense, setExpense] = useState('');
     const [expenses, setExpenses] = useState<Expense[]>([]);
     const [isAdding, setIsAdding] = useState(false);
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const fetchExpenses = async () => {
+            try {
+                const token = await getTokenFromSecureStore(AuthTokens.ACCESS_TOKEN);
+                const response = await axios.get(
+                    config.backendBaseUrl + API_PATH.expenses.root,
+                    {
+                        headers: {
+                            Authorization: token,
+                        }
+                    }
+                );
+
+                const { expenses } = response.data;
+                setExpenses(expenses);
+                setLoading(false)
+            } catch (error: any) {
+                console.error('Failed to fetch expenses:', error?.response?.data || error.message);
+                setLoading(false)
+            }
+        };
+
+        fetchExpenses();
+    }, []);
 
     const handleAddExpense = async () => {
         const { amount, description, tags } = parseExpenseInput(expense)
@@ -78,7 +104,7 @@ export default function AddExpenseScreen() {
         >
             <View style={styles.container}>
 
-                {expenses.length === 0 && !isAdding ? (
+                {(loading || expenses.length === 0 && !isAdding) ? (
                     <View style={{
                         alignSelf: 'center',
                         flex: 1,
@@ -86,7 +112,7 @@ export default function AddExpenseScreen() {
                         alignItems: 'center',
                     }}>
                         <Image source={require('@/assets/images/app-logo.png')} style={styles.image} />
-                        <Text style={styles.emptyText}>No expenses yet.</Text>
+                        <Text style={styles.emptyText}>{loading ? 'Fetching Expenses ...' : 'No expenses yet'}.</Text>
                     </View>
                 ) : (
                     <FlatList
