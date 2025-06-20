@@ -1,17 +1,20 @@
+import config from '@/config';
+import { Colors } from '@/constants/Colors';
+import { API_PATH, APP_PATH } from '@/paths';
+import PasswordField from '@/sections/auth/PasswordField';
+import { saveUser } from '@/utils/AsyncStorageHelper';
+import { addTokenToSecureStore, saveUserTokens } from '@/utils/SecureStoreHelper';
+import axios from 'axios';
+import { Href, useNavigation, useRouter } from 'expo-router';
 import { useLayoutEffect, useState } from 'react';
 import {
     Alert,
-    Button,
-    ImageBackground,
     StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
-    View,
+    View
 } from 'react-native';
-import { useNavigation, useRouter } from 'expo-router';
-import { Colors } from '@/constants/Colors';
-import PasswordField from '@/sections/auth/PasswordField';
 
 export default function LoginScreen() {
     const [email, setEmail] = useState('');
@@ -27,21 +30,34 @@ export default function LoginScreen() {
         });
     }, [navigation]);
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         if (!email || !password) {
             Alert.alert('Error', 'Please enter both email and password.');
             return;
         }
 
-        // TODO: Replace with actual API call
-        console.log('Logging in with:', email, password);
+        try {
+            const response = await axios.post(config.backendBaseUrl + API_PATH.auth.login, {
+                email,
+                password,
+            });
 
-        Alert.alert('Success', 'Logged in!');
-        router.replace('/');
+            const { user, device } = response.data
+            await saveUser(user)
+            await saveUserTokens(device)
+            
+            Alert.alert('Success', 'Logged in!');
+            router.replace(APP_PATH.explore as Href);
+        } catch (error: any) {
+            console.error('Login error:', error);
+            const message =
+                error.response?.data?.message || 'Something went wrong. Please try again.';
+            Alert.alert('Login Failed', message);
+        }
     };
 
     const handleSignUpRedirect = () => {
-        router.push('/signup'); // Adjust route as needed
+        router.push(APP_PATH.auth.signup as Href);
     };
 
     return (

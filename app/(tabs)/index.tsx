@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { useRouter } from 'expo-router';
+import { Href, useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
+import { APP_PATH } from '@/paths';
 
 export default function HomeScreen() {
   const router = useRouter();
 
-  const handleLogin = () => router.push('/login');
-  const handleSignUp = () => router.push('/signup');
+  const handleLogin = () => router.push(APP_PATH.auth.login as Href);
+  const handleSignUp = () => router.push(APP_PATH.auth.signup as Href);
 
   return (
     <View style={styles.container}>

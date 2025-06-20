@@ -7,9 +7,14 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import { useNavigation, useRouter } from 'expo-router';
+import { Href, useNavigation, useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
 import PasswordField from '@/sections/auth/PasswordField';
+import { API_PATH, APP_PATH } from '@/paths';
+import config from '@/config';
+import axios from 'axios';
+import { saveUserTokens } from '@/utils/SecureStoreHelper';
+import { saveUser } from '@/utils/AsyncStorageHelper';
 
 export default function SignupScreen() {
     const [name, setName] = useState('');
@@ -26,7 +31,7 @@ export default function SignupScreen() {
         });
     }, [navigation]);
 
-    const handleSignUp = () => {
+    const handleSignUp = async () => {
         if (!name || !email || !password || !confirmPassword) {
             Alert.alert('Error', 'Please fill out all fields.');
             return;
@@ -37,14 +42,28 @@ export default function SignupScreen() {
             return;
         }
 
-        // TODO: Replace with actual API call
-        console.log('Signing up with:', name, email, password);
-        Alert.alert('Success', 'Account created!');
-        router.replace('/');
+        try {
+            const response = await axios.post(config.backendBaseUrl + API_PATH.auth.signup, {
+                email,
+                password,
+                name
+            });
+
+            const { user, device } = response.data
+            await saveUser(user)
+            await saveUserTokens(device)
+
+            Alert.alert('Success', 'Signed up!');
+            router.replace(APP_PATH.explore as Href);
+        } catch (error: any) {
+            const message =
+                error.response?.data?.message || 'Something went wrong. Please try again.';
+            Alert.alert('Signup Failed', message);
+        }
     };
 
     const handleLoginRedirect = () => {
-        router.push('/(auth)/login');
+        router.push(APP_PATH.auth.login as Href);
     };
 
     return (
