@@ -1,6 +1,6 @@
+import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export default function PrivateTabsLayout() {
     return (
@@ -11,15 +11,6 @@ export default function PrivateTabsLayout() {
             }}
         >
             <Tabs.Screen
-                name="profile"
-                options={{
-                    title: 'Profile',
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="person-circle-outline" size={size} color={color} />
-                    ),
-                }}
-            />
-            <Tabs.Screen
                 name="myExpenses"
                 options={{
                     title: 'My Expenses',
@@ -29,11 +20,29 @@ export default function PrivateTabsLayout() {
                 }}
             />
             <Tabs.Screen
+                name="summary"
+                options={{
+                    title: 'Summary',
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="layers-outline" size={size} color={color} />
+                    ),
+                }}
+            />
+            <Tabs.Screen
                 name="analytics"
                 options={{
                     title: 'Analytics',
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="pie-chart-outline" size={size} color={color} />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="profile"
+                options={{
+                    title: 'Profile',
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="person-circle-outline" size={size} color={color} />
                     ),
                 }}
             />

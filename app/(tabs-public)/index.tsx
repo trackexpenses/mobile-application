@@ -10,7 +10,7 @@ export default function HomeScreen() {
 
   const handleLogin = () => router.push(APP_PATH.auth.login as Href);
   const handleSignUp = () => router.push(APP_PATH.auth.signup as Href);
-  const handleStartNow = () => router.push(APP_PATH.private.profile as Href);
+  const handleStartNow = () => router.push(APP_PATH.private.myExpenses as Href);
 
   const { isLoggedIn } = useAuth()
 

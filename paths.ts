@@ -8,7 +8,10 @@ export const APP_PATH = {
         explore: "/(tabs-public)/explore"
     },
     private: {
-        profile: "/(tabs-private)/profile"
+        profile: "/(tabs-private)/profile",
+        myExpenses: "/(tabs-private)/myExpenses",
+        analytics: "/(tabs-private)/analytics",
+        summary: "/(tabs-private)/summary",
     }
 }
 export const API_PATH = {
