@@ -49,7 +49,7 @@ export default function SignupScreen() {
 
 
             Alert.alert('Success', 'Signed up!');
-            router.replace(APP_PATH.private.profile as Href);
+            router.replace(APP_PATH.private.myExpenses as Href);
         } catch (error: any) {
             const message =
                 error.response?.data?.message || 'Something went wrong. Please try again.';

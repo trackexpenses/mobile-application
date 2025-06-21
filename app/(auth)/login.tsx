@@ -40,7 +40,7 @@ export default function LoginScreen() {
             login(user, device.accessToken)
 
             Alert.alert('Success', 'Logged in!');
-            router.replace(APP_PATH.private.profile as Href);
+            router.replace(APP_PATH.private.myExpenses as Href);
         } catch (error: any) {
             console.error('Login error:', error);
             const message =
