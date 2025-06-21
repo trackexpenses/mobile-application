@@ -1,52 +1,60 @@
 import config from '@/config';
 import { Colors } from '@/constants/Colors';
 import { API_PATH } from '@/paths';
-import AnalyticsDonutChart from '@/sections/analytics.tsx/AnalyticsDonutChart';
 import ExpenseSummary from '@/sections/analytics.tsx/ExpenseSummary';
+import { IChartSlice } from '@/sections/analytics.tsx/types';
+import EmptyState from '@/sections/myExpenses/EmptyState';
 import LoadingState from '@/sections/myExpenses/LoadingState';
-import { getTokenFromSecureStore, AuthTokens } from '@/utils/SecureStoreHelper';
+import { AuthTokens, getTokenFromSecureStore } from '@/utils/SecureStoreHelper';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { useFocusEffect } from 'expo-router';
+import React, { useCallback, useState } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
 
 export default function SummaryScreen() {
-    const [analytics, setAnalytics] = useState(null)
+    const [analytics, setAnalytics] = useState<IChartSlice[] | null>(null)
     const [total, setTotal] = useState(0)
     const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        const fetchAnalytics = async () => {
-            try {
-                const token = await getTokenFromSecureStore(AuthTokens.ACCESS_TOKEN);
-                const response = await axios.get(
-                    config.backendBaseUrl + API_PATH.expenses.analytics,
-                    {
-                        headers: {
-                            Authorization: token,
+    useFocusEffect(
+        useCallback(() => {
+            const fetchAnalytics = async () => {
+                setLoading(true);
+                try {
+                    const token = await getTokenFromSecureStore(AuthTokens.ACCESS_TOKEN);
+                    const response = await axios.get(
+                        config.backendBaseUrl + API_PATH.expenses.analytics,
+                        {
+                            headers: {
+                                Authorization: token,
+                            }
                         }
-                    }
-                );
+                    );
 
-                const { analytics } = response.data;
-                setAnalytics(analytics);
-                const total = analytics.reduce((sum: any, s: any) => sum + s.total, 0);
-                setTotal(total)
+                    const { analytics } = response.data;
+                    setAnalytics(analytics);
+                    const total = analytics.reduce((sum: any, s: any) => sum + s.total, 0);
+                    setTotal(total)
+                } catch (error: any) {
+                    console.error('Failed to fetch expenses:', error?.response?.data || error.message);
+                    setAnalytics(null)
+                } finally {
+                    setLoading(false)
+                }
+            };
 
-                setLoading(false)
-            } catch (error: any) {
-                console.error('Failed to fetch expenses:', error?.response?.data || error.message);
-                setAnalytics(null)
-                setLoading(false)
-            }
-        };
+            fetchAnalytics();
+        }, [])
+    );
 
-        fetchAnalytics();
-    }, []);
+    if (loading) { return <LoadingState /> }
 
-    if (!analytics || loading) { return <LoadingState /> }
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <ExpenseSummary summary={analytics} />
+            {analytics && analytics.length > 0 ?
+                <ExpenseSummary summary={analytics} /> :
+                <EmptyState />
+            }
         </ScrollView>
     );
 };
