@@ -28,6 +28,15 @@ export default function PrivateTabsLayout() {
                     ),
                 }}
             />
+            <Tabs.Screen
+                name="analytics"
+                options={{
+                    title: 'Analytics',
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="pie-chart-outline" size={size} color={color} />
+                    ),
+                }}
+            />
         </Tabs>
     );
 }
