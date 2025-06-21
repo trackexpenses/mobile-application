@@ -22,49 +22,72 @@ export default function ProfileScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.avatarContainer}>
+      <View style={styles.profileCard}>
         <Image
           source={require('@/assets/images/user-icon.avif')}
           style={styles.avatar}
         />
-        <Text style={styles.name}>{user?.name}</Text>
-        <Text style={styles.email}>{user?.email}</Text>
+
+        <View style={styles.infoSection}>
+          <Text style={styles.label}>Name</Text>
+          <Text style={styles.value}>{user?.name}</Text>
+        </View>
+
+        <View style={styles.infoSection}>
+          <Text style={styles.label}>Email</Text>
+          <Text style={styles.value}>{user?.email}</Text>
+        </View>
+
         <View style={styles.logoutButton}>
           <Button title="Logout" onPress={handleLogout} color="#dc2626" />
         </View>
       </View>
     </ScrollView>
+
   );
 }
 const styles = StyleSheet.create({
   container: {
-    padding: 24,
-    paddingTop: 100,
+    flexGrow: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f9fafb',
+    backgroundColor: '#f0f0f0',
+    paddingVertical: 40,
   },
-  avatarContainer: {
+  profileCard: {
+    width: '90%',
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
     alignItems: 'center',
   },
   avatar: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 24,
+  },
+  infoSection: {
+    width: '100%',
     marginBottom: 16,
   },
-  name: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#1f2937',
+  label: {
+    fontSize: 14,
+    color: '#888',
+    marginBottom: 4,
   },
-  email: {
-    fontSize: 16,
-    color: '#6b7280',
-    marginBottom: 32,
+  value: {
+    fontSize: 18,
+    fontWeight: '500',
+    color: '#222',
   },
   logoutButton: {
-    marginTop: 12,
+    marginTop: 24,
     width: '100%',
-    maxWidth: 200,
   },
 });

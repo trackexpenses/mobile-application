@@ -12,7 +12,7 @@ export default function CategoryBreakDown({ selectedLabel, setSelectedLabel }: I
     const summary = selectedLabel.summary && selectedLabel.summary.length > 0
         ? selectedLabel.summary
         : [{ category: 'Total', value: selectedLabel.value }]
-        
+
     return (
         <View
             style={{
@@ -38,7 +38,7 @@ export default function CategoryBreakDown({ selectedLabel, setSelectedLabel }: I
                 onPress={() => setSelectedLabel(null)}
             />
 
-            <Text style={{ fontSize: 16, fontWeight: 'bold', color: selectedLabel.color }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'black' }}>
                 Breakdown for: {selectedLabel?.label}
             </Text>
             <View style={{ width: '100%', marginTop: 10 }}>
@@ -58,8 +58,8 @@ export default function CategoryBreakDown({ selectedLabel, setSelectedLabel }: I
                             marginBottom: 6,
                         }}
                     >
+                        <Text style={{ fontWeight: 'bold', color: '#000' }}>{tag.value} EGP</Text>
                         <Text style={{ fontWeight: '600', color: '#333' }}>{tag.category}</Text>
-                        <Text style={{ fontWeight: 'bold', color: '#000' }}>{tag.value}</Text>
                     </View>
                 ))}
             </View>

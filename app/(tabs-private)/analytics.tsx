@@ -59,8 +59,7 @@ const analytics: IAnalytics = {
 
 const total = analytics.chartData.reduce((sum, s) => sum + s.value, 0);
 
-const DonutChart = () => {
-
+export default function AnalyticsScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -69,7 +68,6 @@ const DonutChart = () => {
   );
 };
 
-export default DonutChart;
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
