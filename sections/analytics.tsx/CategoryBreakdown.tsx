@@ -9,9 +9,9 @@ interface ICategoryBreakDown {
 }
 
 export default function CategoryBreakDown({ selectedLabel, setSelectedLabel }: ICategoryBreakDown) {
-    const summary = selectedLabel.summary && selectedLabel.summary.length > 0
-        ? selectedLabel.summary
-        : [{ category: 'Total', value: selectedLabel.value }]
+    const summary = selectedLabel.children && selectedLabel.children.length > 1
+        ? selectedLabel.children
+        : [{ tags: ['Total'], amount: selectedLabel.total }]
 
     return (
         <View
@@ -41,28 +41,30 @@ export default function CategoryBreakDown({ selectedLabel, setSelectedLabel }: I
             <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'black' }}>
                 Breakdown for: {selectedLabel?.label}
             </Text>
+
             <View style={{ width: '100%', marginTop: 10 }}>
-                {(selectedLabel.summary && selectedLabel.summary.length > 0
-                    ? selectedLabel.summary
-                    : [{ category: 'Total', value: selectedLabel.value }]
-                ).map((tag, index) => (
-                    <View
-                        key={index}
-                        style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            paddingVertical: 6,
-                            paddingHorizontal: 12,
-                            backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#e9e9e9',
-                            borderRadius: 6,
-                            marginBottom: 6,
-                        }}
-                    >
-                        <Text style={{ fontWeight: 'bold', color: '#000' }}>{tag.value} EGP</Text>
-                        <Text style={{ fontWeight: '600', color: '#333' }}>{tag.category}</Text>
-                    </View>
-                ))}
+                {summary.map((expense, index) => {
+                    const tags = expense.tags.filter(tag => tag !== selectedLabel.label).join(',');
+                    return (
+                        <View
+                            key={index}
+                            style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                paddingVertical: 6,
+                                paddingHorizontal: 12,
+                                backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#e9e9e9',
+                                borderRadius: 6,
+                                marginBottom: 6,
+                            }}
+                        >
+                            <Text style={{ fontWeight: 'bold', color: '#000' }}>{expense.amount} EGP</Text>
+                            <Text style={{ fontWeight: '600', color: '#333' }}>{tags}</Text>
+                            {expense.description && <Text style={{ fontWeight: '600', color: '#333' }}>{expense.description}</Text>}
+                        </View>
+                    );
+                })}
             </View>
-        </View>
+        </View >
     )
 }

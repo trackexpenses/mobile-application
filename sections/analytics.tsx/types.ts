@@ -1,15 +1,11 @@
-export interface ICategorySummary {
-    category: string
-    value: number
+interface IChildExpense {
+    amount: number
+    tags: string[]
+    description?: string
 }
 export interface IChartSlice {
     label: string
     color: string
-    value: number
-    summary?: ICategorySummary[]
-}
-
-export interface IAnalytics {
-    summary: ICategorySummary[]
-    chartData: IChartSlice[]
+    total: number
+    children?: IChildExpense[]
 }

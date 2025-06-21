@@ -29,7 +29,7 @@ export default function AnalyticsDonutChart({ data, total }: IAnalyticsDonutChar
                 <Svg width={svgSize} height={svgSize} style={{ position: 'absolute' }}>
                     <G rotation="-90" origin={`${center}, ${center}`}>
                         {data.map((slice, index) => {
-                            const sliceAngle = (slice.value / total) * 2 * Math.PI;
+                            const sliceAngle = (slice.total / total) * 2 * Math.PI;
                             const endAngle = startAngle + sliceAngle;
                             const path = createArc(startAngle, endAngle, center, radius);
                             const midAngle = startAngle + sliceAngle / 2;

@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
-import { ICategorySummary } from "./types";
 import { Colors } from "@/constants/Colors";
+import { IExpense } from "../myExpenses/types";
+import { IChartSlice } from "./types";
 
-export default function ExpenseSummary({ summary }: { summary: ICategorySummary[] }) {
+export default function ExpenseSummary({ summary }: { summary: IChartSlice[] }) {
     return (
         <View
             style={{
@@ -22,7 +23,7 @@ export default function ExpenseSummary({ summary }: { summary: ICategorySummary[
                 Expenses Summary
             </Text>
 
-            {summary.map((tag, index) => (
+            {summary.map((expense, index) => (
                 <View
                     key={index}
                     style={{
@@ -37,9 +38,9 @@ export default function ExpenseSummary({ summary }: { summary: ICategorySummary[
                     }}
                 >
                     <Text style={{ fontSize: 16, fontWeight: 'bold', color: Colors.primary.main }}>
-                        {tag.value} EGP
+                        {expense.total} EGP
                     </Text>
-                    <Text style={{ fontSize: 16, color: '#333' }}>{tag.category}</Text>
+                    <Text style={{ fontSize: 16, color: '#333' }}>{expense.label}</Text>
                 </View>
             ))}
         </View>

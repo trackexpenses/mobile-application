@@ -20,7 +20,8 @@ export const API_PATH = {
         signup: "/auth/signup"
     },
     expenses: {
-        root: "/expenses"
+        root: "/expenses",
+        analytics: "/expenses/analytics"
     }
 
 }
