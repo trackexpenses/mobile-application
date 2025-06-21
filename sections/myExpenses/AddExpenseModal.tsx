@@ -44,7 +44,7 @@ export default function AddExpenseModal({ isAdding, setIsAdding, expense, setExp
             );
 
             Alert.alert('Success', 'Expense is added!');
-            setExpenses(prev => [...prev, newExpense]);
+            setExpenses(prev => [newExpense, ...prev]);
             setExpense('');
             setIsAdding(false);
 
