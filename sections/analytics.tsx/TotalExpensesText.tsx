@@ -18,7 +18,9 @@ export default function TotalExpensesText({ chartSize, total }: ITotalExpensesTe
             }}
         >
             <Text style={{ fontSize: 18, fontWeight: 'bold' }}>EGP</Text>
-            <Text style={{ fontSize: 24, fontWeight: 'bold' }}>{Math.round(total / 1000)}K</Text>
+            <Text style={{ fontSize: 24, fontWeight: 'bold' }}>
+                {total > 1000 ? `${Math.round(total / 1000)}K` : total}
+            </Text>
         </View>
     )
 }

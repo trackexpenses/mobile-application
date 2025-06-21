@@ -58,7 +58,7 @@ export default function CategoryBreakDown({ selectedLabel, setSelectedLabel }: I
                                 marginBottom: 6,
                             }}
                         >
-                            <Text style={{ fontWeight: 'bold', color: '#000' }}>{expense.amount} EGP</Text>
+                            <Text style={{ fontWeight: 'bold', color: '#000' }}>{expense.amount.toLocaleString()} EGP</Text>
                             <Text style={{ fontWeight: '600', color: '#333' }}>{tags}</Text>
                             {expense.description && <Text style={{ fontWeight: '600', color: '#333' }}>{expense.description}</Text>}
                         </View>

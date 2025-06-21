@@ -38,7 +38,7 @@ export default function ExpenseSummary({ summary }: { summary: IChartSlice[] }) 
                     }}
                 >
                     <Text style={{ fontSize: 16, fontWeight: 'bold', color: Colors.primary.main }}>
-                        {expense.total} EGP
+                        {expense.total.toLocaleString()} EGP
                     </Text>
                     <Text style={{ fontSize: 16, color: '#333' }}>{expense.label}</Text>
                 </View>

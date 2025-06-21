@@ -57,7 +57,7 @@ export default function CategorySlice({ slice, path, radius, center, midAngle, s
                     textAnchor="middle"
                     alignmentBaseline="middle"
                 >
-                    {Math.round(slice.total / 1000)}K
+                    {slice.total > 1000 ? `${Math.round(slice.total / 1000)}K` : slice.total}
                 </SvgText>
             )}
         </G>
