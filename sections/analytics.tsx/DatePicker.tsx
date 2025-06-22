@@ -53,6 +53,7 @@ export default function DateRangePicker({ startDate, setStartDate, endDate, setE
                     display="default"
                     onChange={onEndChange}
                     minimumDate={startDate || undefined}
+                    maximumDate={new Date()}
                     style={{ width: 120 }}
                 />
             </View>
