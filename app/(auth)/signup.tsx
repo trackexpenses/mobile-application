@@ -39,7 +39,7 @@ export default function SignupScreen() {
 
         try {
             const response = await axios.post(config.backendBaseUrl + API_PATH.auth.signup, {
-                email,
+                email: email.toLowerCase(),
                 password,
                 name
             });

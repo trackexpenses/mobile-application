@@ -32,7 +32,7 @@ export default function LoginScreen() {
 
         try {
             const response = await axios.post(config.backendBaseUrl + API_PATH.auth.login, {
-                email,
+                email: email.toLowerCase(),
                 password,
             });
 

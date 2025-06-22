@@ -7,7 +7,7 @@ export function parseExpenseInput(input: string) {
 
     for (let i = 1; i < parts.length; i++) {
         if (parts[i].startsWith('#')) {
-            tags.push(parts[i].slice(1));
+            tags.push(parts[i].slice(1).toLowerCase());
         } else {
             descriptionParts.push(parts[i]);
         }
