@@ -17,7 +17,8 @@ export default function CategoryBreakDown({ selectedLabel, setSelectedLabel }: I
         <View
             style={{
                 marginTop: 20,
-                padding: 30,
+                paddingVertical: 30,
+                paddingHorizontal: 10,
                 borderRadius: 12,
                 backgroundColor: '#f0f0f0',
                 width: 320,
@@ -51,16 +52,18 @@ export default function CategoryBreakDown({ selectedLabel, setSelectedLabel }: I
                             style={{
                                 flexDirection: 'row',
                                 justifyContent: 'space-between',
-                                paddingVertical: 6,
-                                paddingHorizontal: 12,
-                                backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#e9e9e9',
+                                alignItems: 'center',
+                                padding: 12,
+                                backgroundColor: '#e9e9e9',
                                 borderRadius: 6,
                                 marginBottom: 6,
                             }}
                         >
                             <Text style={{ fontWeight: 'bold', color: '#000' }}>{expense.amount.toLocaleString()} EGP</Text>
-                            <Text style={{ fontWeight: '600', color: '#333' }}>{tags}</Text>
-                            {expense.description && <Text style={{ fontWeight: '600', color: '#333' }}>{expense.description}</Text>}
+                            <View>
+                                {expense.tags.length > 0 && <Text style={{ fontWeight: '600', color: '#333' }}>{tags}</Text>}
+                                {expense.description && <Text style={{ fontWeight: '600', color: '#333' }}>{expense.description}</Text>}
+                            </View>
                         </View>
                     );
                 })}
