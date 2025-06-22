@@ -29,9 +29,20 @@ export default function CategorySlice({ slice, path, radius, center, midAngle, s
     const valueX = center + labelRadiusMid * Math.cos(midAngle);
     const valueY = center + labelRadiusMid * Math.sin(midAngle);
 
+    const handlePress = () => {
+        setSelectedLabel(slice);
+    };
+
     return (
-        <G key={slice.label} onPress={() => setSelectedLabel(slice)}>
-            <Path d={path} stroke={slice.color} strokeWidth={strokeWidth} fill="none" />
+        <G key={slice.label} >
+            <Path
+                d={path}
+                stroke={slice.color}
+                strokeWidth={strokeWidth}
+                fill="rgba(0,0,0,0.01)"
+                onPress={handlePress}
+                onPressIn={handlePress}
+            />
 
             <Line x1={x1} y1={y1} x2={x2} y2={y2} stroke={slice.color} strokeWidth={1} />
 
@@ -61,6 +72,5 @@ export default function CategorySlice({ slice, path, radius, center, midAngle, s
                 </SvgText>
             )}
         </G>
-
     )
 }
