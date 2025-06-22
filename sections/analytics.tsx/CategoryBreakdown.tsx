@@ -9,7 +9,7 @@ interface ICategoryBreakDown {
 }
 
 export default function CategoryBreakDown({ selectedLabel, setSelectedLabel }: ICategoryBreakDown) {
-    const summary = selectedLabel.children && selectedLabel.children.length > 1
+    const summary = selectedLabel.children && selectedLabel.children.length > 0 && selectedLabel.children[0].tags[0] !== 'other'
         ? selectedLabel.children
         : [{ tags: ['Total'], amount: selectedLabel.total }]
 
