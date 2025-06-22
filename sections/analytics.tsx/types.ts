@@ -9,3 +9,7 @@ export interface IChartSlice {
     total: number
     children?: IChildExpense[]
 }
+export enum VIEW_TYPE {
+    SUMMARY = 'summary',
+    CHART = 'chart'
+}
