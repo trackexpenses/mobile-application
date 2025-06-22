@@ -30,7 +30,7 @@ npm install
 
 ## 🔐 2. Configure Environment Variables
 
-Create a `.env` file in the root directory and add your database connection string:
+Create a `.env` file in the root directory and add your backend url:
 
 ```env
 EXPO_PUBLIC_BACKEND_BASE_URL="your_backend_server_url"
